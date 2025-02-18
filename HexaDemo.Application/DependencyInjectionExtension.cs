@@ -9,9 +9,9 @@ namespace HexaDemo.Application;
 
 public static class DependencyInjectionExtension
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR(typeof(CreateProductCommand).Assembly);
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly));
 
         services.AddScoped<IRequestHandler<CreateProductCommand>, CreateProductCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProductCommand>, UpdateProductCommandHandler>();

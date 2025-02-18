@@ -1,0 +1,29 @@
+### Додати новий продукт
+POST http://localhost:5000/api/products
+Content-Type: application/json
+
+{
+  "name": "Молоко",
+  "price": 25.50,
+  "photo": "https://example.com/milk.jpg"
+}
+
+### Отримати всі продукти
+GET http://localhost:5000/api/products
+
+### Пошук продукту за назвою
+GET http://localhost:5000/api/products/search?name=Молоко
+
+### Оновити продукт
+PUT http://localhost:5000/api/products
+Content-Type: application/json
+
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Молоко Ultra",
+  "price": 30.00,
+  "photo": "https://example.com/milk-ultra.jpg"
+}
+
+### Видалити продукт
+DELETE http://localhost:5000/api/products/550e8400-e29b-41d4-a716-446655440000

@@ -1,14 +1,30 @@
-namespace HexaDemo.Presentation;
+using HexaDemo.Application;
+using HexaDemo.Infrastructure;
+using HexaDemo.Presentation;
+using HexaDemo.Presentation.Middlewares;
+using Scalar.AspNetCore;
+using Microsoft.AspNetCore.OpenApi;
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-        var app = builder.Build();
+var builder = WebApplication.CreateBuilder(args);
 
-        app.MapGet("/", () => "Hello World!");
+// Додаємо шари проєкту
+builder.Services.AddPresentation();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
+// Якщо хочете нормальні СУБД
+//builder.Services.AddInfrastructure(builder.Configuration);
 
-        app.Run();
-    }
+var app = builder.Build();
+
+// Налаштування HTTP-конвеєра
+app.UseExceptionHandling();
+if (app.Environment.IsDevelopment())
+{ 
+    // TODO: FIX
+    // app.MapOpenApi();
+    app.MapScalarApiReference();
 }
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();
